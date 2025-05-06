@@ -2,6 +2,8 @@
 using PosFidelizacionAppV1._0.Services;
 using PosFidelizacionAppV1._0.Pages;
 using PosFidelizacionAppV1._0.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
+
 
 namespace PosFidelizacionAppV1._0
 {
@@ -10,6 +12,7 @@ namespace PosFidelizacionAppV1._0
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
+
             builder
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>
@@ -19,14 +22,26 @@ namespace PosFidelizacionAppV1._0
                 });
 
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
-            // Servicios
+
+            // Servicios internos
             builder.Services.AddSingleton<DatabaseService>();
-            builder.Services.AddSingleton<CustomerApiService>();
-            builder.Services.AddSingleton<ProductApiService>();
             builder.Services.AddSingleton<CartService>();
             builder.Services.AddSingleton<UserService>();
+
+            // Servicios API con HttpClient configurado por servicio
+            builder.Services.AddHttpClient<ProductApiService>(client =>
+            {
+                client.BaseAddress = new Uri("https://fakestoreapi.com");
+                client.Timeout = TimeSpan.FromSeconds(30);
+            });
+
+            builder.Services.AddHttpClient<CustomerApiService>(client =>
+            {
+                client.BaseAddress = new Uri("https://jsonplaceholder.typicode.com");
+                client.Timeout = TimeSpan.FromSeconds(30);
+            });
 
             // ViewModels
             builder.Services.AddSingleton<LoginViewModel>();

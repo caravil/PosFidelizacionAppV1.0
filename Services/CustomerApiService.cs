@@ -11,26 +11,28 @@ namespace PosFidelizacionAppV1._0.Services
     {
         private readonly HttpClient _httpClient;
 
-        public CustomerApiService()
+        public CustomerApiService(HttpClient httpClient)
         {
-            _httpClient = new HttpClient();
+            _httpClient = httpClient;
         }
 
         public async Task<List<Customer>> GetCustomersAsync()
         {
             try
             {
-                var response = await _httpClient.GetAsync("https://jsonplaceholder.typicode.com/users");
-                response.EnsureSuccessStatusCode();
-
-                var customers = await response.Content.ReadFromJsonAsync<List<Customer>>();
-                return customers;
+                var customers = await _httpClient.GetFromJsonAsync<List<Customer>>("users");
+                return customers ?? new List<Customer>();
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"[HTTP ERROR] {ex.Message}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error al obtener clientes: {ex.Message}");
-                return new List<Customer>();
+                Console.WriteLine($"[GENERAL ERROR] {ex.Message}");
             }
+
+            return new List<Customer>();
         }
     }
 }

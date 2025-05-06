@@ -22,12 +22,20 @@ namespace PosFidelizacionAppV1._0.ViewModels
         [ObservableProperty]
         public ObservableCollection<Product> products;
 
-        // Constructor que recibe las dependencias necesarias
+        // Propiedades para ActivityIndicator
+        [ObservableProperty]
+        private bool isRunning;
+
+        [ObservableProperty]
+        private bool isVisible;
+
         public ProductsViewModel(ProductApiService productApiService, DatabaseService databaseService)
         {
             _productApiService = productApiService;
             _databaseService = databaseService;
             Products = new ObservableCollection<Product>();
+            IsRunning = false;
+            IsVisible = false;
         }
 
         [RelayCommand]
@@ -35,6 +43,9 @@ namespace PosFidelizacionAppV1._0.ViewModels
         {
             if (IsBusy) return;
             IsBusy = true;
+            IsRunning = true;  // Activar el ActivityIndicator
+            IsVisible = true;
+
             StatusMessage = "Sincronizando productos...";
 
             var products = await _productApiService.GetProductsFromApiAsync();
@@ -45,6 +56,9 @@ namespace PosFidelizacionAppV1._0.ViewModels
 
             StatusMessage = "Productos sincronizados.";
             await LoadProductsAsync();
+
+            IsRunning = false;  // Desactivar el ActivityIndicator
+            IsVisible = false;
             IsBusy = false;
         }
 
@@ -65,8 +79,6 @@ namespace PosFidelizacionAppV1._0.ViewModels
             try
             {
                 var productList = await _databaseService.GetProductsAsync();
-                Console.WriteLine($"Productos en la base de datos: {productList.Count}");
-
                 Products.Clear();
                 foreach (var product in productList)
                 {
@@ -78,7 +90,6 @@ namespace PosFidelizacionAppV1._0.ViewModels
                 Console.WriteLine($"Error al cargar productos: {ex.Message}");
             }
         }
-
     }
-
 }
+

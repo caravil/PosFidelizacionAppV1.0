@@ -11,18 +11,21 @@ namespace PosFidelizacionAppV1._0.Services
     {
         private readonly HttpClient _httpClient;
 
-        public ProductApiService()
+        public ProductApiService(HttpClient httpClient)
         {
-            _httpClient = new HttpClient();
+            _httpClient = httpClient;
         }
 
         public async Task<List<Product>> GetProductsFromApiAsync()
         {
-            var response = await _httpClient.GetAsync("https://fakestoreapi.com/products");
-
-            if (response.IsSuccessStatusCode)
+            try
             {
+                var response = await _httpClient.GetAsync("https://fakestoreapi.com/products");
+
+                response.EnsureSuccessStatusCode(); // Lanza excepción si no es 2xx
+
                 var json = await response.Content.ReadAsStringAsync();
+
                 var products = JsonSerializer.Deserialize<List<Product>>(json);
 
                 if (products == null)
@@ -36,8 +39,21 @@ namespace PosFidelizacionAppV1._0.Services
 
                 return products;
             }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"[HTTP ERROR] {ex.Message}");
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine($"[I/O ERROR] {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[GENERAL ERROR] {ex.Message}");
+            }
 
             return new List<Product>();
         }
+
     }
 }
