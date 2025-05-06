@@ -9,7 +9,7 @@ namespace PosFidelizacionAppV1._0.Models
 {
     public class Customer
     {
-        [PrimaryKey, AutoIncrement]
+        [PrimaryKey]
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;

@@ -53,8 +53,8 @@ namespace PosFidelizacionAppV1._0.ViewModels
 
         public async Task LoadCustomersAsync()
         {
-            var customerList = await _databaseService.GetCustomersAsync(); // Usar el servicio inyectado
             Customers.Clear();
+            var customerList = await _databaseService.GetCustomersAsync(); 
             foreach (var customer in customerList)
             {
                 Customers.Add(customer);

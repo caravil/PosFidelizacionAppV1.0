@@ -20,7 +20,16 @@ namespace PosFidelizacionAppV1._0.Services
         {
             try
             {
-                var customers = await _httpClient.GetFromJsonAsync<List<Customer>>("users");
+                var apiCustomers = await _httpClient.GetFromJsonAsync<List<ApiCustomer>>("users");
+
+                var customers = apiCustomers?.ConvertAll(api => new Customer
+                {
+                    Id = api.id,
+                    Name = api.name,
+                    Email = api.email,
+                    LoyaltyPoints = new Random().Next(100, 1000) // Puntos simulados
+                });
+
                 return customers ?? new List<Customer>();
             }
             catch (HttpRequestException ex)
@@ -34,5 +43,6 @@ namespace PosFidelizacionAppV1._0.Services
 
             return new List<Customer>();
         }
+
     }
 }

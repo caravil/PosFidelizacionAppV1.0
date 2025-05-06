@@ -43,25 +43,6 @@ namespace PosFidelizacionAppV1._0.Services
             }
         }
 
-        // Métodos para manejar Usuarios
-        public async Task<List<User>> GetUsersAsync()
-        {
-            await EnsureInitializedAsync();
-            return await _database.Table<User>().ToListAsync();
-        }
-
-        public async Task<User> GetUserByEmailAsync(string email)
-        {
-            await EnsureInitializedAsync();
-            return await _database.Table<User>().FirstOrDefaultAsync(u => u.Email == email);
-        }
-
-        public async Task<int> AddUserAsync(User user)
-        {
-            await EnsureInitializedAsync();
-            return await _database.InsertAsync(user);
-        }
-
         // Métodos para manejar Clientes
         public async Task<List<Customer>> GetCustomersAsync()
         {
@@ -72,7 +53,7 @@ namespace PosFidelizacionAppV1._0.Services
         public async Task<int> AddCustomerAsync(Customer customer)
         {
             await EnsureInitializedAsync();
-            return await _database.InsertAsync(customer);
+            return await _database.InsertOrReplaceAsync(customer);
         }
 
         public async Task<int> UpdateCustomerAsync(Customer customer)
