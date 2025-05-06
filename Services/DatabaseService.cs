@@ -125,5 +125,12 @@ namespace PosFidelizacionAppV1._0.Services
             await EnsureInitializedAsync();
             return await _database.InsertAsync(saleDetail);
         }
+
+        public async Task AddSaleDetailsAsync(IEnumerable<SaleDetail> saleDetails)
+        {
+            await EnsureInitializedAsync();
+            await _database.InsertAllAsync(saleDetails);
+        }
+
     }
 }

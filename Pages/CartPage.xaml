@@ -77,6 +77,13 @@
                 Text="Finalizar compra"
                 TextColor="Black"
                 VerticalOptions="Center" />
+
+            <Button
+                Command="{Binding ProcesarVentaCommand}"
+                IsEnabled="{Binding IsProcesarEnabled}"
+                Text="Procesar Venta" />
+
+
         </Grid>
 
     </Grid>
