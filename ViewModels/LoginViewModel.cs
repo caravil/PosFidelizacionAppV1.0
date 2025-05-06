@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Windows.Input;
 using PosFidelizacionAppV1._0.Services;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Storage;
 
 namespace PosFidelizacionAppV1._0.ViewModels
 {
@@ -23,7 +20,14 @@ namespace PosFidelizacionAppV1._0.ViewModels
 
         public LoginViewModel()
         {
-            _userService = new UserService();
+            // Obtener la ruta del archivo de la base de datos
+            string dbPath = Path.Combine(FileSystem.AppDataDirectory, "users.db3");
+
+            // Inicializar UserService con la ruta de la base de datos
+            _userService = new UserService(dbPath);
+
+            // Agregar el usuario predeterminado si no existe
+            _userService.AddDefaultUserAsync().ConfigureAwait(false);
         }
 
         [RelayCommand]
@@ -53,6 +57,5 @@ namespace PosFidelizacionAppV1._0.ViewModels
                 await Shell.Current.DisplayAlert("Error", $"Ocurrió un error: {ex.Message}", "OK");
             }
         }
-
     }
 }

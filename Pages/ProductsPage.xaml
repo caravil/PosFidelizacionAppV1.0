@@ -7,6 +7,7 @@
     Padding="15"
     BackgroundColor="Black">
 
+    <!--  ScrollView para permitir el desplazamiento  -->
     <ScrollView>
         <VerticalStackLayout Padding="10" Spacing="15">
             <Label
@@ -19,34 +20,61 @@
             <!--  ActivityIndicator enlazado a las propiedades IsRunning y IsVisible  -->
             <ActivityIndicator IsRunning="{Binding IsRunning}" IsVisible="{Binding IsVisible}" />
 
-            <!--  CollectionView enlazado directamente a la propiedad Products  -->
+            <!--  CollectionView con diseno tipo galeria (3 columnas)  -->
             <CollectionView ItemsSource="{Binding Products}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="3" />
+                </CollectionView.ItemsLayout>
+
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:Product">
                         <Border
-                            Margin="0,5,0,5"
+                            Margin="5"
                             Padding="8"
                             Background="#1E1E1E"
                             Stroke="Gray"
                             StrokeShape="RoundRectangle 8">
-                            <VerticalStackLayout Spacing="4">
+                            <VerticalStackLayout Spacing="8">
+                                <!--  Imagen del producto sin recorte  -->
+                                <Image
+                                    Aspect="AspectFit"
+                                    HeightRequest="100"
+                                    HorizontalOptions="Center"
+                                    Source="{Binding ImageUrl}" />
+
+                                <!--  Nombre del producto  -->
                                 <Label
-                                    FontSize="Small"
+                                    FontAttributes="Bold"
+                                    FontSize="12"
+                                    LineBreakMode="TailTruncation"
+                                    MaxLines="1"
                                     Text="{Binding Name}"
                                     TextColor="White" />
+
+                                <!--  Descripcion del producto  -->
                                 <Label
-                                    FontSize="Small"
+                                    FontSize="10"
+                                    LineBreakMode="WordWrap"
+                                    MaxLines="2"
+                                    Text="{Binding Description}"
+                                    TextColor="#AAAAAA" />
+
+                                <!--  Precio del producto  -->
+                                <Label
+                                    FontSize="10"
                                     Text="{Binding Price, StringFormat='Precio: {0:C}'}"
                                     TextColor="#CCCCCC" />
+
+                                <!--  Boton para agregar al carrito  -->
                                 <Button
                                     Margin="0,5,0,0"
-                                    Padding="6,3"
+                                    Padding="4,2"
                                     BackgroundColor="#CACC90"
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProductsViewModel}}, Path=AddToCartCommand}"
                                     CommandParameter="{Binding .}"
                                     CornerRadius="10"
-                                    FontSize="12"
-                                    Text="Agregar al carrito"
+                                    FontSize="10"
+                                    Text="Agregar"
                                     TextColor="Black" />
                             </VerticalStackLayout>
                         </Border>

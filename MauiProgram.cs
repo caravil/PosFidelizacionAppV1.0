@@ -25,10 +25,16 @@ namespace PosFidelizacionAppV1._0
             builder.Logging.AddDebug();
 #endif
 
+            // Ruta de la base de datos
+            var dbPath = Path.Combine(FileSystem.AppDataDirectory, "local.db");
+
             // Servicios internos
             builder.Services.AddSingleton<DatabaseService>();
             builder.Services.AddSingleton<CartService>();
             builder.Services.AddSingleton<UserService>();
+
+            // Registrar UserService con la ruta de la base de datos
+            builder.Services.AddSingleton<UserService>(s => new UserService(dbPath));
 
             // Servicios API con HttpClient configurado por servicio
             builder.Services.AddHttpClient<ProductApiService>(client =>
