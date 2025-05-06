@@ -1,0 +1,88 @@
+<ContentPage
+    x:Class="PosFidelizacionAppV1._0.Pages.LoginPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages="clr-namespace:PosFidelizacionAppV1._0.Pages"
+    xmlns:vm="clr-namespace:PosFidelizacionAppV1._0.ViewModels"
+    BackgroundColor="#F0F4F4">
+
+    <ContentPage.BindingContext>
+        <vm:LoginViewModel />
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30"
+            Spacing="30"
+            VerticalOptions="CenterAndExpand">
+
+            <!--  Titulo  -->
+            <Label
+                FontAttributes="Bold"
+                FontSize="36"
+                HorizontalOptions="Center"
+                Text="Iniciar Sesion"
+                TextColor="#3B4D4D" />
+
+            <!--  Contenedor de formulario  -->
+            <Grid RowSpacing="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!--  Correo electronico  -->
+                <Border
+                    Grid.Row="0"
+                    BackgroundColor="White"
+                    Stroke="#CCCCCC"
+                    StrokeShape="RoundRectangle 12"
+                    StrokeThickness="0.5"
+                    WidthRequest="300">
+                    <Entry
+                        Margin="0"
+                        BackgroundColor="Transparent"
+                        HorizontalOptions="Fill"
+                        Keyboard="Email"
+                        Placeholder="Correo electronico"
+                        PlaceholderColor="#888"
+                        Text="{Binding Email}"
+                        TextColor="#333" />
+                </Border>
+
+                <!--  Contrasena  -->
+                <Border
+                    Grid.Row="1"
+                    BackgroundColor="White"
+                    Stroke="#CCCCCC"
+                    StrokeShape="RoundRectangle 12"
+                    StrokeThickness="0.5"
+                    WidthRequest="300">
+                    <Entry
+                        Margin="0"
+                        BackgroundColor="Transparent"
+                        HorizontalOptions="Fill"
+                        IsPassword="True"
+                        Placeholder="Contrasena"
+                        PlaceholderColor="#888"
+                        Text="{Binding Password}"
+                        TextColor="#333" />
+                </Border>
+
+                <!--  Boton  -->
+                <Button
+                    Grid.Row="2"
+                    BackgroundColor="#7A9E9F"
+                    Command="{Binding LoginCommand}"
+                    CornerRadius="12"
+                    FontAttributes="Bold"
+                    HeightRequest="50"
+                    HorizontalOptions="Center"
+                    Text="Iniciar sesion"
+                    TextColor="White"
+                    WidthRequest="300" />
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,83 @@
+<ContentPage
+    x:Class="PosFidelizacionAppV1._0.Pages.CartPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:PosFidelizacionAppV1._0.Models"
+    xmlns:vm="clr-namespace:PosFidelizacionAppV1._0.ViewModels"
+    Padding="15"
+    x:DataType="vm:CartViewModel"
+    BackgroundColor="Black">
+
+    <Grid
+        Padding="10"
+        RowDefinitions="Auto,*,Auto"
+        RowSpacing="10">
+
+        <Label
+            Grid.Row="0"
+            Margin="0,0,0,10"
+            FontAttributes="Bold"
+            FontSize="Title"
+            HorizontalOptions="Center"
+            Text="Carrito de compras"
+            TextColor="White" />
+
+        <ScrollView Grid.Row="1" Margin="0,0,0,10">
+            <VerticalStackLayout Spacing="10">
+                <CollectionView ItemsSource="{Binding CartItems}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:CartItem">
+                            <Border
+                                Margin="0,5"
+                                Padding="10"
+                                Background="#2D2D2D"
+                                Stroke="White"
+                                StrokeShape="RoundRectangle 10">
+                                <VerticalStackLayout Spacing="5">
+                                    <Label
+                                        FontSize="Small"
+                                        Text="{Binding ProductName}"
+                                        TextColor="White" />
+                                    <Label
+                                        FontSize="Small"
+                                        Text="{Binding Quantity, StringFormat='Cantidad: {0}'}"
+                                        TextColor="White" />
+                                    <Label
+                                        FontSize="Small"
+                                        Text="{Binding Subtotal, StringFormat='Subtotal: {0:C}'}"
+                                        TextColor="#A7CECB" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Grid
+            Grid.Row="2"
+            Padding="0,10,0,0"
+            ColumnDefinitions="*,Auto">
+            <Label
+                Grid.Column="0"
+                FontAttributes="Bold"
+                FontSize="Medium"
+                Text="{Binding TotalAmount, StringFormat='Total: {0:C}'}"
+                TextColor="White"
+                VerticalOptions="Center" />
+
+            <Button
+                Grid.Column="1"
+                Padding="10,5"
+                BackgroundColor="#8BA6A9"
+                Command="{Binding FinalizePurchaseCommand}"
+                CornerRadius="10"
+                FontSize="12"
+                HorizontalOptions="End"
+                Text="Finalizar compra"
+                TextColor="Black"
+                VerticalOptions="Center" />
+        </Grid>
+
+    </Grid>
+</ContentPage>

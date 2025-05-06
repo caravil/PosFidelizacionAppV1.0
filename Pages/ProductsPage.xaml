@@ -1,0 +1,65 @@
+<ContentPage
+    x:Class="PosFidelizacionAppV1._0.Pages.ProductsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:PosFidelizacionAppV1._0.Models"
+    xmlns:vm="clr-namespace:PosFidelizacionAppV1._0.ViewModels"
+    Padding="15"
+    x:DataType="vm:ProductsViewModel"
+    BackgroundColor="Black">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="10" Spacing="15">
+            <Label
+                FontAttributes="Bold"
+                FontSize="Title"
+                HorizontalOptions="Center"
+                Text="Productos disponibles"
+                TextColor="White" />
+
+            <ActivityIndicator IsRunning="{Binding ProductsVM.IsBusy}" IsVisible="{Binding ProductsVM.IsBusy}" />
+
+            <CollectionView ItemsSource="{Binding ProductsVM.Products}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Product">
+                        <Border
+                            Margin="0,5,0,5"
+                            Padding="8"
+                            Background="#1E1E1E"
+                            Stroke="Gray"
+                            StrokeShape="RoundRectangle 8">
+                            <VerticalStackLayout Spacing="4">
+                                <Label
+                                    FontSize="Small"
+                                    Text="{Binding Name}"
+                                    TextColor="White" />
+                                <Label
+                                    FontSize="Small"
+                                    Text="{Binding Price, StringFormat='Precio: {0:C}'}"
+                                    TextColor="#CCCCCC" />
+                                <Button
+                                    Margin="0,5,0,0"
+                                    Padding="6,3"
+                                    BackgroundColor="#CACC90"
+                                    Command="{Binding AddToCartCommand}"
+                                    CommandParameter="{Binding .}"
+                                    CornerRadius="10"
+                                    FontSize="12"
+                                    Text="Agregar al carrito"
+                                    TextColor="Black" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <!--  Boton para navegar al carrito  -->
+            <Button
+                Margin="0,10,0,0"
+                BackgroundColor="#CACC90"
+                Command="{Binding NavigateToCartCommand}"
+                Text="Ir al Carrito"
+                TextColor="Black" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="PosFidelizacionAppV1._0.Pages.CustomersPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:PosFidelizacionAppV1._0.ViewModels"
+    xmlns:pages="clr-namespace:PosFidelizacionAppV1._0.Pages"
+    x:DataType="local:CustomersViewModel"
+    BackgroundColor="#F4EBBE">
+
+
+    <Grid Padding="20" RowDefinitions="Auto, *">
+        <!--  Titulo / Estado  -->
+        <Label
+            Grid.Row="0"
+            Margin="0,0,0,10"
+            FontSize="Medium"
+            HorizontalOptions="Center"
+            Text="{Binding StatusMessage}"
+            TextColor="#3B4D4D" />
+
+        <!--  CollectionView con scroll incorporado  -->
+        <CollectionView
+            Grid.Row="1"
+            BackgroundColor="Transparent"
+            ItemsSource="{Binding Customers}"
+            VerticalScrollBarVisibility="Always">
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame
+                        Margin="0,5"
+                        Padding="15"
+                        BackgroundColor="White"
+                        BorderColor="#A7CECB"
+                        CornerRadius="10">
+
+                        <!--  Grid de 2 columnas para cada cliente  -->
+                        <Grid
+                            ColumnDefinitions="2*,1*"
+                            ColumnSpacing="10"
+                            RowDefinitions="Auto,Auto">
+                            <!--  Columna 0: Nombre + Correo  -->
+                            <StackLayout Grid.Column="0" Spacing="4">
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="18"
+                                    Text="{Binding Name}"
+                                    TextColor="#3B4D4D" />
+                                <Label
+                                    FontSize="14"
+                                    Text="{Binding Email}"
+                                    TextColor="#75704E" />
+                            </StackLayout>
+
+                            <!--  Columna 1: Puntos  -->
+                            <StackLayout
+                                Grid.Column="1"
+                                HorizontalOptions="End"
+                                Spacing="2"
+                                VerticalOptions="Center">
+                                <Label
+                                    FontSize="14"
+                                    Text="Puntos:"
+                                    TextColor="#75704E" />
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="16"
+                                    HorizontalOptions="Center"
+                                    Text="{Binding LoyaltyPoints}"
+                                    TextColor="#A7CECB" />
+                            </StackLayout>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

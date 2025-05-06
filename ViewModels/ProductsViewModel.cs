@@ -1,0 +1,84 @@
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using PosFidelizacionAppV1._0.Models;
+using PosFidelizacionAppV1._0.Services;
+using PosFidelizacionAppV1._0.Pages;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+
+namespace PosFidelizacionAppV1._0.ViewModels
+{
+    public partial class ProductsViewModel : ObservableObject
+    {
+        private readonly ProductApiService _productApiService;
+        private readonly DatabaseService _databaseService;
+
+        [ObservableProperty]
+        private bool isBusy;
+
+        [ObservableProperty]
+        private string statusMessage;
+
+        [ObservableProperty]
+        public ObservableCollection<Product> products;
+
+        // Constructor que recibe las dependencias necesarias
+        public ProductsViewModel(ProductApiService productApiService, DatabaseService databaseService)
+        {
+            _productApiService = productApiService;
+            _databaseService = databaseService;
+            Products = new ObservableCollection<Product>();
+        }
+
+        [RelayCommand]
+        public async Task SyncProductsAsync()
+        {
+            if (IsBusy) return;
+            IsBusy = true;
+            StatusMessage = "Sincronizando productos...";
+
+            var products = await _productApiService.GetProductsFromApiAsync();
+            foreach (var product in products)
+            {
+                await _databaseService.AddProductAsync(product);
+            }
+
+            StatusMessage = "Productos sincronizados.";
+            await LoadProductsAsync();
+            IsBusy = false;
+        }
+
+        [RelayCommand]
+        void AddToCart(Product product)
+        {
+            MessagingCenter.Send(this, "AddProductToCart", product);
+        }
+
+        [RelayCommand]
+        public async Task NavigateToCartAsync()
+        {
+            await Shell.Current.GoToAsync(nameof(CartPage));
+        }
+
+        public async Task LoadProductsAsync()
+        {
+            try
+            {
+                var productList = await _databaseService.GetProductsAsync();
+                Console.WriteLine($"Productos en la base de datos: {productList.Count}");
+
+                Products.Clear();
+                foreach (var product in productList)
+                {
+                    Products.Add(product);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al cargar productos: {ex.Message}");
+            }
+        }
+
+    }
+
+}

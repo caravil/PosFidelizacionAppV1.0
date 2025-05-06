@@ -1,0 +1,112 @@
+﻿<ContentPage
+    x:Class="PosFidelizacionAppV1._0.Pages.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages="clr-namespace:PosFidelizacionAppV1._0.Pages"
+    Title="Menu Principal"
+    BackgroundColor="#F0F4F4">
+
+    <!--  Definir el StackLayout con un nombre  -->
+    <VerticalStackLayout
+        x:Name="MainStackLayout"
+        Padding="30"
+        HorizontalOptions="Center"
+        Spacing="25"
+        VerticalOptions="Center">
+
+        <Label
+            Margin="0,0,0,30"
+            FontAttributes="Bold"
+            FontSize="34"
+            HorizontalOptions="Center"
+            Text="Bienvenido al Sistema POS"
+            TextColor="#3B4D4D" />
+
+        <!--  FILA DE ÍCONOS Y BOTONES  -->
+        <Grid
+            ColumnDefinitions="Auto,Auto"
+            ColumnSpacing="20"
+            HorizontalOptions="Center"
+            RowDefinitions="Auto,Auto,Auto,Auto"
+            RowSpacing="20">
+
+            <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                FontSize="32"
+                HorizontalOptions="End"
+                Text="🛒"
+                VerticalOptions="Center" />
+            <Label
+                Grid.Row="1"
+                Grid.Column="0"
+                FontSize="32"
+                HorizontalOptions="End"
+                Text="👥"
+                VerticalOptions="Center" />
+            <Label
+                Grid.Row="2"
+                Grid.Column="0"
+                FontSize="32"
+                HorizontalOptions="End"
+                Text="🧾"
+                VerticalOptions="Center" />
+            <Label
+                Grid.Row="3"
+                Grid.Column="0"
+                FontSize="32"
+                HorizontalOptions="End"
+                Text="⛔"
+                VerticalOptions="Center" />
+
+            <!--  Botones  -->
+            <Button
+                Grid.Row="0"
+                Grid.Column="1"
+                BackgroundColor="#7A9E9F"
+                Clicked="OnProductosClicked"
+                CornerRadius="12"
+                FontSize="16"
+                HeightRequest="50"
+                Text="Ir a Productos"
+                TextColor="White"
+                WidthRequest="200" />
+
+            <Button
+                Grid.Row="1"
+                Grid.Column="1"
+                BackgroundColor="#A7CECB"
+                Clicked="OnClientesClicked"
+                CornerRadius="12"
+                FontSize="16"
+                HeightRequest="50"
+                Text="Ir a Clientes"
+                TextColor="White"
+                WidthRequest="200" />
+
+            <Button
+                Grid.Row="2"
+                Grid.Column="1"
+                BackgroundColor="#8BA6A9"
+                Clicked="OnCartClicked"
+                CornerRadius="12"
+                FontSize="16"
+                HeightRequest="50"
+                Text="Ir al carrito"
+                TextColor="White"
+                WidthRequest="200" />
+
+            <Button
+                Grid.Row="3"
+                Grid.Column="1"
+                BackgroundColor="#F44336"
+                Clicked="OnCerrarSesionClicked"
+                CornerRadius="12"
+                FontSize="16"
+                HeightRequest="50"
+                Text="Cerrar Sesión"
+                TextColor="White"
+                WidthRequest="200" />
+        </Grid>
+    </VerticalStackLayout>
+</ContentPage>

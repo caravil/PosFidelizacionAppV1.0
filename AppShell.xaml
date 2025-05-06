@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="PosFidelizacionAppV1._0.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages="clr-namespace:PosFidelizacionAppV1._0.Pages"
+    xmlns:views="clr-namespace:PosFidelizacionAppV1._0.Views"
+    Title="PosFidelizacionAppV1._0"
+    Shell.FlyoutBehavior="Flyout">
+
+    <ShellContent
+        Title="LoginPage"
+        ContentTemplate="{DataTemplate pages:LoginPage}"
+        Route="LoginPage" />
+</Shell>

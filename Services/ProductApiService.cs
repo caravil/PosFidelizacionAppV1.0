@@ -1,0 +1,43 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Text.Json;
+using System.Threading.Tasks;
+using PosFidelizacionAppV1._0.Models;
+
+namespace PosFidelizacionAppV1._0.Services
+{
+    public class ProductApiService
+    {
+        private readonly HttpClient _httpClient;
+
+        public ProductApiService()
+        {
+            _httpClient = new HttpClient();
+        }
+
+        public async Task<List<Product>> GetProductsFromApiAsync()
+        {
+            var response = await _httpClient.GetAsync("https://fakestoreapi.com/products");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var json = await response.Content.ReadAsStringAsync();
+                var products = JsonSerializer.Deserialize<List<Product>>(json);
+
+                if (products == null)
+                    return new List<Product>();
+
+                foreach (var product in products)
+                {
+                    product.Rate = product.Rating?.Rate ?? 0;
+                    product.Count = product.Rating?.Count ?? 0;
+                }
+
+                return products;
+            }
+
+            return new List<Product>();
+        }
+    }
+}
