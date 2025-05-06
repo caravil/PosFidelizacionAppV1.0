@@ -71,7 +71,15 @@ namespace PosFidelizacionAppV1._0.ViewModels
         [RelayCommand]
         public async Task NavigateToCartAsync()
         {
-            await Shell.Current.GoToAsync(nameof(CartPage));
+            try
+            {
+                Console.WriteLine("Navegando al carrito...");
+                await Shell.Current.GoToAsync(nameof(CartPage));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al navegar al carrito: {ex.Message}");
+            }
         }
 
         public async Task LoadProductsAsync()

@@ -1,4 +1,4 @@
-<ContentPage
+﻿<ContentPage
     x:Class="PosFidelizacionAppV1._0.Pages.ProductsPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -7,88 +7,101 @@
     Padding="15"
     BackgroundColor="Black">
 
-    <!--  ScrollView para permitir el desplazamiento  -->
-    <ScrollView>
-        <VerticalStackLayout Padding="10" Spacing="15">
-            <Label
-                FontAttributes="Bold"
-                FontSize="Title"
-                HorizontalOptions="Center"
-                Text="Productos disponibles"
-                TextColor="White" />
+    <!--  Contenedor Grid para combinar el contenido y el boton flotante  -->
+    <Grid>
+        <!--  ScrollView para permitir el desplazamiento  -->
+        <ScrollView>
+            <VerticalStackLayout Padding="10" Spacing="15">
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="Title"
+                    HorizontalOptions="Center"
+                    Text="Productos disponibles"
+                    TextColor="White" />
 
-            <!--  ActivityIndicator enlazado a las propiedades IsRunning y IsVisible  -->
-            <ActivityIndicator IsRunning="{Binding IsRunning}" IsVisible="{Binding IsVisible}" />
+                <!--  ActivityIndicator enlazado a las propiedades IsRunning y IsVisible  -->
+                <ActivityIndicator IsRunning="{Binding IsRunning}" IsVisible="{Binding IsVisible}" />
 
-            <!--  CollectionView con diseno tipo galeria (3 columnas)  -->
-            <CollectionView ItemsSource="{Binding Products}">
-                <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" Span="3" />
-                </CollectionView.ItemsLayout>
+                <!--  CollectionView con diseno tipo galeria (3 columnas)  -->
+                <CollectionView ItemsSource="{Binding Products}">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="3" />
+                    </CollectionView.ItemsLayout>
 
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:Product">
-                        <Border
-                            Margin="5"
-                            Padding="8"
-                            Background="#1E1E1E"
-                            Stroke="Gray"
-                            StrokeShape="RoundRectangle 8">
-                            <VerticalStackLayout Spacing="8">
-                                <!--  Imagen del producto sin recorte  -->
-                                <Image
-                                    Aspect="AspectFit"
-                                    HeightRequest="100"
-                                    HorizontalOptions="Center"
-                                    Source="{Binding ImageUrl}" />
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Product">
+                            <Border
+                                Margin="5"
+                                Padding="8"
+                                Background="#1E1E1E"
+                                Stroke="Gray"
+                                StrokeShape="RoundRectangle 8">
+                                <VerticalStackLayout Spacing="8">
+                                    <!--  Imagen del producto sin recorte  -->
+                                    <Image
+                                        Aspect="AspectFit"
+                                        HeightRequest="100"
+                                        HorizontalOptions="Center"
+                                        Source="{Binding ImageUrl}" />
 
-                                <!--  Nombre del producto  -->
-                                <Label
-                                    FontAttributes="Bold"
-                                    FontSize="12"
-                                    LineBreakMode="TailTruncation"
-                                    MaxLines="1"
-                                    Text="{Binding Name}"
-                                    TextColor="White" />
+                                    <!--  Nombre del producto  -->
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="12"
+                                        LineBreakMode="TailTruncation"
+                                        MaxLines="1"
+                                        Text="{Binding Name}"
+                                        TextColor="White" />
 
-                                <!--  Descripcion del producto  -->
-                                <Label
-                                    FontSize="10"
-                                    LineBreakMode="WordWrap"
-                                    MaxLines="2"
-                                    Text="{Binding Description}"
-                                    TextColor="#AAAAAA" />
+                                    <!--  Descripcion del producto  -->
+                                    <Label
+                                        FontSize="10"
+                                        LineBreakMode="WordWrap"
+                                        MaxLines="2"
+                                        Text="{Binding Description}"
+                                        TextColor="#AAAAAA" />
 
-                                <!--  Precio del producto  -->
-                                <Label
-                                    FontSize="10"
-                                    Text="{Binding Price, StringFormat='Precio: {0:C}'}"
-                                    TextColor="#CCCCCC" />
+                                    <!--  Precio del producto  -->
+                                    <Label
+                                        FontSize="10"
+                                        Text="{Binding Price, StringFormat='Precio: {0:C}'}"
+                                        TextColor="#CCCCCC" />
 
-                                <!--  Boton para agregar al carrito  -->
-                                <Button
-                                    Margin="0,5,0,0"
-                                    Padding="4,2"
-                                    BackgroundColor="#CACC90"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProductsViewModel}}, Path=AddToCartCommand}"
-                                    CommandParameter="{Binding .}"
-                                    CornerRadius="10"
-                                    FontSize="10"
-                                    Text="Agregar"
-                                    TextColor="Black" />
-                            </VerticalStackLayout>
-                        </Border>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                                    <!--  Boton para agregar al carrito  -->
+                                    <Button
+                                        Margin="0,5,0,0"
+                                        Padding="4,2"
+                                        BackgroundColor="#CACC90"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProductsViewModel}}, Path=AddToCartCommand}"
+                                        CommandParameter="{Binding .}"
+                                        CornerRadius="10"
+                                        FontSize="10"
+                                        Text="Agregar"
+                                        TextColor="Black" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
 
-            <!--  Boton para navegar al carrito  -->
-            <Button
-                Margin="0,10,0,0"
-                BackgroundColor="#CACC90"
-                Command="{Binding NavigateToCartCommand}"
-                Text="Ir al Carrito"
-                TextColor="Black" />
-        </VerticalStackLayout>
-    </ScrollView>
+            </VerticalStackLayout>
+
+
+        </ScrollView>
+
+        <!--  Boton flotante en la esquina inferior derecha  -->
+        <Button
+            Margin="0,0,20,20"
+            Padding="10"
+            BackgroundColor="#CACC90"
+            Command="{Binding NavigateToCartAsync}"
+            CornerRadius="30"
+            HeightRequest="50"
+            HorizontalOptions="End"
+            Opacity="0.5"
+            Text="🛒"
+            TextColor="Black"
+            VerticalOptions="End"
+            WidthRequest="50" />
+    </Grid>
 </ContentPage>
